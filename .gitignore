@@ -1,0 +1,22 @@
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# PyCharm
+.idea/
+
+# Generated reports
+reports/
+alerts.csv
+
+# Private logs
+*.log
+!sample.logs/
+!sample.logs/*.log
+
+# OS files
+.DS_Store
+Thumbs.db
