@@ -1,6 +1,6 @@
 from datetime import datetime
 
-def detect_brute_force(parsed, threshold=5, window_seconds=60):
+def detect_brute_force(parsed, threshold=5, window_seconds=60, year=2026):
     dates = {}
     alerts = {}
     for things in parsed:
@@ -8,7 +8,7 @@ def detect_brute_force(parsed, threshold=5, window_seconds=60):
             continue
         timestamp = things["timestamp"]
         ip = things["ip"]
-        parsed_time = datetime.strptime("2026 " + timestamp, "%Y %b %d %H:%M:%S")
+        parsed_time = datetime.strptime(f"{year} " + timestamp, "%Y %b %d %H:%M:%S")
         if ip not in dates:
             dates[ip] = []
         dates[ip].append(parsed_time)
@@ -29,6 +29,5 @@ def detect_brute_force(parsed, threshold=5, window_seconds=60):
                     alerts[ip] = attempts
                 else:
                     alerts[ip] = max(alerts[ip], attempts)
-
     return alerts
 

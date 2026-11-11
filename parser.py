@@ -1,6 +1,7 @@
 import ipaddress
+from datetime import datetime
 
-def parse_log_line(line: str) -> dict | None:
+def parse_log_line(line: str, year: int = 2026) -> dict | None:
     words = line.split()
 
     if "from" not in words or "for" not in words or "password" not in words:
@@ -18,6 +19,13 @@ def parse_log_line(line: str) -> dict | None:
 
     username = words[from_check-1]
     timestamp = " ".join(words[0:3])
+    try:
+        parsed_time= datetime.strptime(
+            f"{year} {timestamp}",
+            "%Y %b %d %H:%M:%S"
+        )
+    except ValueError:
+        return None
 
     if words[pass_check - 1] == "Failed":
         event_type = "FAILED"
